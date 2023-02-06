@@ -3,43 +3,31 @@ import { createContext, useContext } from "react";
 
 //initialState type
 type item = {
-  option: string;
-  name: string;
-  quantity: number;
+  name: string | undefined;
+  quantity: number | undefined;
+  option: string | undefined;
   id: number;
 };
 //intial state
 const initialState: InitialState = {
-  name: "",
-  quantity: 0,
-  option: "",
   sections: ["Fruits", "Vegetables", "Snacks"],
   items: [],
 };
 
 interface InitialState {
-  name: string;
-  quantity: number;
-  option: string;
   sections: string[];
   items: item[];
 }
 //enum for the action type
-enum ActionType {
+export enum ActionType {
   ADD = "ADD",
   REMOVE = "REMOVE",
-  UPDATE_NAME = "UPDATE_NAME",
-  UPDATE_QUANTITY = "UPDATE_QUANTITY",
-  SELECTED_SECTION = "SELECTED_SECTION",
 }
 
 // type for the action
 type Action =
   | { type: ActionType.ADD; payload: item[] }
-  | { type: ActionType.REMOVE; payload: item[] }
-  | { type: ActionType.UPDATE_NAME; payload: string }
-  | { type: ActionType.UPDATE_QUANTITY; payload: number }
-  | { type: ActionType.SELECTED_SECTION; payload: string };
+  | { type: ActionType.REMOVE; payload: item[] };
 
 const shopReducer = (state: InitialState, action: Action): InitialState => {
   const { type, payload } = action;
@@ -48,12 +36,7 @@ const shopReducer = (state: InitialState, action: Action): InitialState => {
       return { ...state, items: payload };
     case ActionType.REMOVE:
       return { ...state, items: payload };
-    case ActionType.UPDATE_NAME:
-      return { ...state, name: payload };
-    case ActionType.UPDATE_QUANTITY:
-      return { ...state, quantity: payload };
-    case ActionType.SELECTED_SECTION:
-      return { ...state, option: payload };
+
     default:
       return state;
   }
@@ -61,6 +44,8 @@ const shopReducer = (state: InitialState, action: Action): InitialState => {
 
 export const Context = () => {
   const [state, dispatch] = useReducer(shopReducer, initialState);
+
+  console.log(state.items);
 
   const handleAdd = (newItem: item) => {
     dispatch({ type: ActionType.ADD, payload: [...state.items, newItem] });
@@ -84,9 +69,6 @@ type shopContextType = ReturnType<typeof Context>;
 
 // 2- create context
 const shopContext = createContext<shopContextType>({
-  name: "",
-  quantity: 0,
-  option: "",
   sections: ["Fruits", "Vegetables", "Snacks"],
   items: [],
   dispatch: () => {},
@@ -109,8 +91,6 @@ interface Props {
 // 2- create & export the provider & precise the value
 export const ShopProvider: React.FC<Props> = ({ children }) => {
   return (
-    <shopContext.Provider value={useShopContext()}>
-      {children}
-    </shopContext.Provider>
+    <shopContext.Provider value={Context()}>{children}</shopContext.Provider>
   );
 };
