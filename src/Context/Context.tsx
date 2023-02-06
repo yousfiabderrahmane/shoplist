@@ -2,7 +2,7 @@ import React, { useReducer } from "react";
 import { createContext, useContext } from "react";
 
 //initialState type
-type item = {
+export type item = {
   name: string | undefined;
   quantity: number | undefined;
   option: string | undefined;
@@ -50,7 +50,8 @@ export const Context = () => {
   const handleAdd = (newItem: item) => {
     dispatch({ type: ActionType.ADD, payload: [...state.items, newItem] });
   };
-  const handleDelete = (newList: item[]) => {
+  const handleDelete = (id: number) => {
+    const newList = state.items.filter((item) => item.id !== id);
     dispatch({ type: ActionType.REMOVE, payload: newList });
   };
 

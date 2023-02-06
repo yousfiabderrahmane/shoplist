@@ -14,7 +14,7 @@ export const Inputs = () => {
       name,
       quantity,
       option: selected,
-      id: Math.random() * 999,
+      id: new Date().valueOf(),
     };
 
     handleAdd(item);
@@ -31,9 +31,9 @@ export const Inputs = () => {
           onChange={(e) => setSelected(e.target.value)}
         >
           <option value="">-- Select an option --</option>
-          <option value="fruits">Fruits</option>
-          <option value="vegetables">Vegetables</option>
-          <option value="snacks">Snacks</option>
+          <option value="Fruits">Fruits</option>
+          <option value="Vegetables">Vegetables</option>
+          <option value="Snacks">Snacks</option>
         </select>
       </div>
       <div>
