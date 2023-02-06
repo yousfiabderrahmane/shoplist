@@ -1,9 +1,10 @@
 import React from "react";
+import { Card } from "./Card";
 
 export const Dashboard = () => {
   return (
     <section>
-      <div className="3"></div>
+      <Card />
     </section>
   );
 };

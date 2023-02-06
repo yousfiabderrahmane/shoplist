@@ -1,12 +1,19 @@
-import React from "react";
+import React, { useState } from "react";
 
 export const Inputs = () => {
+  const [selected, setSelected] = useState<string>();
+  console.log(selected);
+
   return (
     <main>
       <p>Add new products</p>
       <div>
         <label>Section</label>
-        <select name="pets">
+        <select
+          value={selected}
+          name="pets"
+          onChange={(e) => setSelected(e.target.value)}
+        >
           <option value="fruits">Fruits</option>
           <option value="vegetables">Vegetables</option>
           <option value="snacks">Snacks</option>
